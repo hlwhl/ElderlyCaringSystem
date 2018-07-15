@@ -1,8 +1,13 @@
-package com.linwei.elderlycare.elderlycaringsystemclient;
+package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.linwei.elderlycare.elderlycaringsystemclient.R;
 
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
@@ -17,6 +22,14 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        //权限检查
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CALL_PHONE},1);
+            return;
+        }
+
+
         //TODO 集成：1.4、初始化数据服务SDK、初始化设备信息并启动推送服务
         // 初始化BmobSDK
         Bmob.initialize(this, "718cb7645ebfcd11e7af7fc89230d1ce");
