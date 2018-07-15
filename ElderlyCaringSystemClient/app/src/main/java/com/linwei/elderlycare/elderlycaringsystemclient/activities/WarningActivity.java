@@ -16,12 +16,13 @@ import com.linwei.elderlycare.elderlycaringsystemclient.R;
 
 import butterknife.BindView;
 
-public class WarningActivity extends AppCompatActivity {
+public class WarningActivity extends AppCompatActivity implements View.OnClickListener{
     @BindView(R.id.call_ward)
     Button callWard;
     @BindView(R.id.call_emergency)
     Button callEmergency;
-    String phonenum;
+    String wardNum;
+    String emgNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +30,24 @@ public class WarningActivity extends AppCompatActivity {
         setContentView(R.layout.activity_warning);
         getSupportActionBar().setTitle("Warning");
 
-        phonenum = "666666";
+        wardNum = "666666";
+        emgNum = "112";
 
-        callWard.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("MissingPermission")
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phonenum));
-                startActivity(intent);
-            }
-        });
+        callWard.setOnClickListener(this);
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.call_ward:
+                Intent intent1 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + wardNum));
+                startActivity(intent1);
+                break;
+            case R.id.call_emergency:
+                Intent intent2 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + emgNum));
+                startActivity(intent2);
+                break;
+        }
     }
 }
