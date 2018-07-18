@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
         //登录成功 查询用户是否有可用传感器
-        validSensorCheck((User) BmobUser.getCurrentUser());
+        validSensorCheck(BmobUser.getCurrentUser());
         finish();
     }
 
@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    public void validSensorCheck(User currentUser) {
+    public void validSensorCheck(BmobUser currentUser) {
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.Theme_AppCompat_DayNight_Dialog);
         progressDialog.setIndeterminate(true);
@@ -167,16 +167,20 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void done(List<Sensor> list, BmobException e) {
                 progressDialog.dismiss();
+                if (list == null) {
+                    //跳转传感器添加页面
+                    Intent intent = new Intent(LoginActivity.this, AddSensorActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 if (e == null) {
-                    if (list.isEmpty()) {
-                        //跳转传感器添加页面
-                    } else {
                         //有对应的传感器  跳转主页
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
-                    }
+                    finish();
                 } else {
                     //查询出错
+                    Toast.makeText(getApplicationContext(), "ValidSensorCheck查询出错" + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });

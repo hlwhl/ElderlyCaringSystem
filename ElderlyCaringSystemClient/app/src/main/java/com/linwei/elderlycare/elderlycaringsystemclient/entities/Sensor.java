@@ -1,6 +1,8 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.entities;
 
-public class Sensor {
+import cn.bmob.v3.BmobObject;
+
+public class Sensor extends BmobObject {
     private String sensorBTAddress;
     private User owner;
     private String sensorDescription;
