@@ -1,7 +1,10 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,5 +49,14 @@ public class SplashActivity extends AppCompatActivity {
         });
         // 启动推送服务
         BmobPush.startWork(this);
+
+        new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+                Intent intent=new Intent(SplashActivity.this,LoginActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        }).sendEmptyMessageDelayed(0,2000);
     }
 }
