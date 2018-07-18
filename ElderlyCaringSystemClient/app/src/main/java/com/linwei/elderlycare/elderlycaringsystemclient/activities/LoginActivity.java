@@ -13,12 +13,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
+import com.linwei.elderlycare.elderlycaringsystemclient.entities.Sensor;
+import com.linwei.elderlycare.elderlycaringsystemclient.entities.User;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 public class LoginActivity extends AppCompatActivity {
@@ -51,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
-                finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
@@ -61,14 +66,14 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Login");
 
         if (!validate()) {
-            onLoginFailed();
+            onLoginFailed("Input Not Valid!");
             return;
         }
 
         _loginButton.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.Theme_AppCompat_Dialog);
+                R.style.Theme_AppCompat_DayNight_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
@@ -83,8 +88,12 @@ public class LoginActivity extends AppCompatActivity {
         user.login(new SaveListener<BmobUser>() {
             @Override
             public void done(BmobUser bmobUser, BmobException e) {
-                onLoginSuccess();
                 progressDialog.dismiss();
+                if (e == null) {
+                    onLoginSuccess();
+                } else {
+                    onLoginFailed(e.getMessage());
+                }
             }
         });
     }
@@ -110,12 +119,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
-        Intent intent=new Intent(LoginActivity.this,HomeActivity.class);
-        startActivity(intent);
+        //登录成功 查询用户是否有可用传感器
+        validSensorCheck((User) BmobUser.getCurrentUser());
+        finish();
     }
 
-    public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+    public void onLoginFailed(String errMsg) {
+        Toast.makeText(getBaseContext(), errMsg, Toast.LENGTH_LONG).show();
 
         _loginButton.setEnabled(true);
     }
@@ -126,8 +136,8 @@ public class LoginActivity extends AppCompatActivity {
         String email = _usernameText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _usernameText.setError("enter a valid email address");
+        if (email.isEmpty()) {
+            _usernameText.setError("please enter a valid user name");
             valid = false;
         } else {
             _usernameText.setError(null);
@@ -141,5 +151,34 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    public void validSensorCheck(User currentUser) {
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                R.style.Theme_AppCompat_DayNight_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Checking User States...");
+        progressDialog.show();
+
+        //查询当前用户是否配置传感器
+        BmobQuery<Sensor> query = new BmobQuery<Sensor>();
+        query.addWhereEqualTo("owner", currentUser);
+        query.findObjects(new FindListener<Sensor>() {
+            @Override
+            public void done(List<Sensor> list, BmobException e) {
+                progressDialog.dismiss();
+                if (e == null) {
+                    if (list.isEmpty()) {
+                        //跳转传感器添加页面
+                    } else {
+                        //有对应的传感器  跳转主页
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }
+                } else {
+                    //查询出错
+                }
+            }
+        });
     }
 }

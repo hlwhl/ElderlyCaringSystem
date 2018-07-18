@@ -3,6 +3,7 @@ package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -63,14 +64,14 @@ public class SignupActivity extends AppCompatActivity {
         Log.d(TAG, "Signup");
 
         if (!validate()) {
-            onSignupFailed();
+            onSignupFailed("Input Not Valid");
             return;
         }
 
         _signupButton.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
-                R.style.Theme_AppCompat_Dialog);
+                R.style.Theme_AppCompat_DayNight_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
@@ -78,7 +79,7 @@ public class SignupActivity extends AppCompatActivity {
         String name = _nameText.getText().toString();
         String address = sensorAdd.getText().toString();
         String email = _emailText.getText().toString();
-        String mobile = _mobileText.getText().toString();
+        String phonenum = _mobileText.getText().toString();
         String password = _passwordText.getText().toString();
 
         int usertype=0;
@@ -91,15 +92,17 @@ public class SignupActivity extends AppCompatActivity {
         newUser.setUsername(name);
         newUser.setAddress(address);
         newUser.setEmail(email);
-        newUser.setMobilePhoneNumber(mobile);
+        newUser.setPhonenum(phonenum);
         newUser.setPassword(password);
         newUser.setType(usertype);
         newUser.signUp(new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
+                progressDialog.dismiss();
                 if (e==null){
                     onSignupSuccess();
-                    progressDialog.dismiss();
+                } else {
+                    onSignupFailed(e.getMessage());
                 }
             }
         });
@@ -109,11 +112,12 @@ public class SignupActivity extends AppCompatActivity {
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
+        Toast.makeText(getApplicationContext(), "Sign up succeed!", Toast.LENGTH_LONG).show();
         finish();
     }
 
-    public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+    public void onSignupFailed(String errormsg) {
+        Toast.makeText(getBaseContext(), errormsg, Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
@@ -150,7 +154,7 @@ public class SignupActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (mobile.isEmpty() || mobile.length()!=10) {
+        if (mobile.isEmpty()) {
             _mobileText.setError("Enter Valid Mobile Number");
             valid = false;
         } else {

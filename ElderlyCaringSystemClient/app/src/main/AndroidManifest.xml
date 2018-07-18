@@ -91,9 +91,14 @@
         <activity
             android:name=".activities.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activities.LoginActivity"></activity>
-        <activity android:name=".activities.SignupActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".activities.SignupActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".activities.AddSensorActivity"></activity>
     </application>
 
 </manifest>

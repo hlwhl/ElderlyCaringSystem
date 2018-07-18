@@ -3,6 +3,15 @@ package com.linwei.elderlycare.elderlycaringsystemclient.entities;
 public class Sensor {
     private String sensorBTAddress;
     private User owner;
+    private String sensorDescription;
+
+    public void setSensorDescription(String sensorDescription) {
+        this.sensorDescription = sensorDescription;
+    }
+
+    public String getSensorDescription() {
+        return sensorDescription;
+    }
 
     public boolean isOn() {
         return powerStatus;

@@ -55,6 +55,7 @@ public class SplashActivity extends AppCompatActivity {
             public boolean handleMessage(Message message) {
                 Intent intent=new Intent(SplashActivity.this,LoginActivity.class);
                 startActivity(intent);
+                finish();
                 return false;
             }
         }).sendEmptyMessageDelayed(0,2000);
