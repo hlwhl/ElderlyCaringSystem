@@ -1,10 +1,11 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.entities;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobUser;
 
 public class Sensor extends BmobObject {
     private String sensorBTAddress;
-    private User owner;
+    private BmobUser owner;
     private String sensorDescription;
 
     public void setSensorDescription(String sensorDescription) {
@@ -21,7 +22,7 @@ public class Sensor extends BmobObject {
 
     private boolean powerStatus;
 
-    public void setOwner(User owner) {
+    public void setOwner(BmobUser owner) {
         this.owner = owner;
     }
 
@@ -33,7 +34,7 @@ public class Sensor extends BmobObject {
         return sensorBTAddress;
     }
 
-    public User getOwner() {
+    public BmobUser getOwner() {
         return owner;
     }
 

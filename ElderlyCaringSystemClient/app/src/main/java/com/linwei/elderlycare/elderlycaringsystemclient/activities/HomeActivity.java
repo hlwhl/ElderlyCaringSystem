@@ -3,6 +3,9 @@ package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,9 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
+import com.linwei.elderlycare.elderlycaringsystemclient.adapters.CardRecyAdapter;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.Sensor;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -27,7 +32,9 @@ import cn.bmob.v3.listener.FindListener;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    User currentUser;
+    BmobUser currentUser;
+    private RecyclerView recyclerView;
+    private CardRecyAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +44,19 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Dashboard");
 
-        currentUser = (User) BmobUser.getCurrentUser();
+        currentUser = BmobUser.getCurrentUser();
+
+        //recycler view
+        recyclerView = findViewById(R.id.recview_home);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        List<Sensor> list = new ArrayList<Sensor>();
+        Sensor test = new Sensor();
+        test.setSensorDescription("ddd");
+        list.add(test);
+        myAdapter = new CardRecyAdapter(list);
+        recyclerView.setAdapter(myAdapter);
+
 
         //悬浮按钮
         FloatingActionButton fab = findViewById(R.id.fab);

@@ -42,13 +42,14 @@ public class AddSensorActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), sensorAddress.getText().toString(), Toast.LENGTH_LONG);
                 Sensor sensor = new Sensor();
-                sensor.setOwner((User) BmobUser.getCurrentUser());
+                sensor.setOwner(BmobUser.getCurrentUser());
                 sensor.setSensorBTAddress(sensorAddress.getText().toString());
                 sensor.setSensorDescription(sensorDescription.getText().toString());
                 sensor.save(new SaveListener<String>() {
                     @Override
                     public void done(String s, BmobException e) {
                         if (e == null) {
+                            Toast.makeText(getApplicationContext(), "Sensor information saved", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(AddSensorActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
