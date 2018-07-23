@@ -98,7 +98,8 @@
         <activity
             android:name=".activities.SignupActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".activities.AddSensorActivity"></activity>
+        <activity android:name=".activities.AddSensorActivity" />
+        <activity android:name=".activities.SensorHistoryActivity"></activity>
     </application>
 
 </manifest>

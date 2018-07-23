@@ -1,5 +1,6 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.adapters;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,15 +10,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
+import com.linwei.elderlycare.elderlycaringsystemclient.activities.HomeActivity;
+import com.linwei.elderlycare.elderlycaringsystemclient.activities.SensorHistoryActivity;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.Sensor;
+import com.linwei.elderlycare.elderlycaringsystemclient.entities.SensorDataHistory;
 
 import java.util.List;
 
 public class CardRecyAdapter extends RecyclerView.Adapter<CardRecyAdapter.ViewHolder> {
-    private List<Sensor> sensors;
+    private static List<Sensor> sensors;
+    private static Context context;
 
-    public CardRecyAdapter(List<Sensor> sensors) {
-        this.sensors = sensors;
+    public CardRecyAdapter(Context context, List<Sensor> sensors) {
+        CardRecyAdapter.sensors = sensors;
+        CardRecyAdapter.context = context;
     }
 
     @NonNull
@@ -46,6 +52,7 @@ public class CardRecyAdapter extends RecyclerView.Adapter<CardRecyAdapter.ViewHo
         return sensors == null ? 0 : sensors.size();
     }
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title, status, description, address;
 
@@ -58,8 +65,9 @@ public class CardRecyAdapter extends RecyclerView.Adapter<CardRecyAdapter.ViewHo
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //跳转至sensor历史记录
-                    //Intent intent=new Intent(HomeActivity.class,);
+                    Intent intent = new Intent(context, SensorHistoryActivity.class);
+                    intent.putExtra("sensor", sensors.get(getAdapterPosition()));
+                    context.startActivity(intent);
                 }
             });
         }

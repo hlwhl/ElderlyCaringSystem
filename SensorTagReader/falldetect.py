@@ -36,12 +36,20 @@ def main():
 
 		if math.sqrt(x*x+y*y+z*z)>2 :
 			print("FALL!!!")
+			#push notification
 			os.system('curl -X POST \
 				-H \"X-Bmob-Application-Id: 718cb7645ebfcd11e7af7fc89230d1ce\"          \
 				-H \"X-Bmob-REST-API-Key: 7c42e568f537207d6beb3e38a0c4c5dc\"        \
 				-H \"Content-Type: application/json\" \
 				-d \'{\"data\": {\"alert\": "Warning!! Fall detected!!!.\"}}\' \
 				https://api.bmob.cn/1/push')
+			#write sensor history
+			os.system('curl -X POST \
+				-H "X-Bmob-Application-Id: 718cb7645ebfcd11e7af7fc89230d1ce" \
+				-H "X-Bmob-REST-API-Key: 7c42e568f537207d6beb3e38a0c4c5dc" \
+				-H "Content-Type: application/json" \
+				-d '{"type": "motion sensor","content":"fallen over","sensor":{"__type":"Pointer","className":"Sensor","objectId":"a6a263407f" } }' \
+				https://api.bmob.cn/1/classes/SensorDataHistory')
 			cursor.execute('INSERT INTO Status (type) VALUES (\'FALL\')')
 		time.sleep(1.0)
 

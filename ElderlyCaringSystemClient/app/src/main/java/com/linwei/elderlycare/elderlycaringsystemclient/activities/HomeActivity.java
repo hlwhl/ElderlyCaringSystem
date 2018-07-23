@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
 import com.linwei.elderlycare.elderlycaringsystemclient.adapters.CardRecyAdapter;
@@ -38,8 +39,7 @@ public class HomeActivity extends AppCompatActivity
     BmobUser currentUser;
     private RecyclerView recyclerView;
     private CardRecyAdapter myAdapter;
-    @BindView(R.id.refresh_home)
-    SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Dashboard");
+        swipeRefreshLayout = findViewById(R.id.refresh_home);
 
         currentUser = BmobUser.getCurrentUser();
 
@@ -64,8 +65,10 @@ public class HomeActivity extends AppCompatActivity
             public void done(List<Sensor> list, BmobException e) {
                 if (e == null) {
                     //bind data to adapter
-                    myAdapter = new CardRecyAdapter(list);
+                    myAdapter = new CardRecyAdapter(getApplicationContext(), list);
                     recyclerView.setAdapter(myAdapter);
+                } else {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -74,7 +77,23 @@ public class HomeActivity extends AppCompatActivity
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                recyclerView.
+                //querry sensor information
+                BmobQuery<Sensor> query = new BmobQuery<Sensor>();
+                query.addWhereEqualTo("owner", currentUser);
+                query.findObjects(new FindListener<Sensor>() {
+                    @Override
+                    public void done(List<Sensor> list, BmobException e) {
+                        swipeRefreshLayout.setRefreshing(false);
+                        if (e == null) {
+                            //bind data to adapter
+                            CardRecyAdapter newAdapter = new CardRecyAdapter(getApplicationContext(), list);
+                            recyclerView.swapAdapter(newAdapter, true);
+                            Toast.makeText(getApplicationContext(), "Refresh Succeed", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         });
 
@@ -138,18 +157,21 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+//        if (id == R.id.nav_camera) {
+//            // Handle the camera action
+//        } else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
+        if (id == R.id.menu_about) {
+            //跳转关于页面
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

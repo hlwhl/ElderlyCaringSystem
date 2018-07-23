@@ -154,11 +154,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void validSensorCheck(BmobUser currentUser) {
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-                R.style.Theme_AppCompat_DayNight_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Checking User States...");
-        progressDialog.show();
+//        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+//                R.style.Theme_AppCompat_DayNight_Dialog);
+//        progressDialog.setIndeterminate(true);
+//        progressDialog.setMessage("Checking User States...");
+//        progressDialog.show();
 
         //查询当前用户是否配置传感器
         BmobQuery<Sensor> query = new BmobQuery<Sensor>();
@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
         query.findObjects(new FindListener<Sensor>() {
             @Override
             public void done(List<Sensor> list, BmobException e) {
-                progressDialog.dismiss();
+//                progressDialog.dismiss();
                 if (list == null) {
                     //跳转传感器添加页面
                     Intent intent = new Intent(LoginActivity.this, AddSensorActivity.class);
