@@ -1,5 +1,6 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.adapters;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +31,14 @@ public class CardRecyAdapter extends RecyclerView.Adapter<CardRecyAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Sensor s = sensors.get(position);
         //holder.sensorname.setText(s.getSensorDescription());
+        if (s.isOn()) {
+            holder.status.setText("Sensor Status: Power On and Normal");
+        } else {
+            holder.status.setText("Sensor Status: Sensor Power Off");
+        }
+        holder.title.setText(s.getTitle());
+        holder.description.setText(s.getSensorDescription());
+        holder.address.setText("Sensor Bluetooth Address: " + s.getSensorBTAddress());
     }
 
     @Override
@@ -38,11 +47,21 @@ public class CardRecyAdapter extends RecyclerView.Adapter<CardRecyAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView sensorname;
+        public TextView title, status, description, address;
 
         public ViewHolder(View v) {
             super(v);
-            //sensorname=v.findViewById(R.id.tv_sensorname);
+            title = v.findViewById(R.id.card_title);
+            status = v.findViewById(R.id.card_sensorstatus);
+            description = v.findViewById(R.id.card_description);
+            address = v.findViewById(R.id.card_btAddress);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //跳转至sensor历史记录
+                    //Intent intent=new Intent(HomeActivity.class,);
+                }
+            });
         }
     }
 }

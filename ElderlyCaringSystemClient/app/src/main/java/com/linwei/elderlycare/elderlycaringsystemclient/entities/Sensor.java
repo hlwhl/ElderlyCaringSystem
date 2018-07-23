@@ -8,6 +8,8 @@ public class Sensor extends BmobObject {
     private String sensorBTAddress;
     private BmobUser owner;
     private String sensorDescription;
+    private boolean powerStatus;
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -30,7 +32,6 @@ public class Sensor extends BmobObject {
         return powerStatus;
     }
 
-    private boolean powerStatus;
 
     public void setOwner(BmobUser owner) {
         this.owner = owner;

@@ -7,73 +7,52 @@
     card_view:cardElevation="12dp"
     card_view:cardBackgroundColor="@color/colorPrimary"
     android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="12dp"
     android:layout_marginLeft="12dp"
     android:layout_marginRight="12dp"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="140dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-        <android.support.v7.widget.AppCompatTextView
+        <TextView
             android:id="@+id/card_title"
-            android:layout_width="167dp"
-            android:layout_height="27dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Motion Sensor"
-            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="20sp"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
-
+            android:textColor="#FFFFFF"
+            android:text="Motion Sensor"
+            android:layout_marginBottom="10dp" />
         <TextView
-            android:id="@+id/tv_sensorstatus"
+            android:id="@+id/card_btAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="9dp"
-            android:layout_marginTop="10dp"
-            android:text="Power On and Normal"
             android:textColor="#FFFFFF"
-            card_view:layout_constraintStart_toEndOf="@+id/tv_sensorstatustitle"
-            card_view:layout_constraintTop_toBottomOf="@+id/card_title" />
-
+            android:text="Sensor Address: 00:00:00:00:00" />
         <TextView
-            android:id="@+id/tv_sensorstatustitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:text="Status: "
-            android:textColor="#FFFFFF"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/card_title" />
-
+            android:id="@+id/card_sensorstatus"
+            android:text="Sensor Status: Powered On and Normal"
+            android:textColor="#FFFFFF" />
         <TextView
-            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:text="No Fallen Over Detected Recently"
-            android:textColor="#FFFFFF"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_sensorstatus" />
-
+            android:id="@+id/card_description"
+            android:text="Description...."
+            android:textColor="#FFFFFF" />
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
-            android:text="Click the card for more information"
             android:textColor="#FFFFFF"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/textView3" />
+            android:text="Click the card for more infomation" />
 
-    </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
 
 
 </android.support.v7.widget.CardView>

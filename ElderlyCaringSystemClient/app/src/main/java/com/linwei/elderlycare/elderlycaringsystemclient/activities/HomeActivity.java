@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import com.linwei.elderlycare.elderlycaringsystemclient.entities.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -36,6 +38,8 @@ public class HomeActivity extends AppCompatActivity
     BmobUser currentUser;
     private RecyclerView recyclerView;
     private CardRecyAdapter myAdapter;
+    @BindView(R.id.refresh_home)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +55,28 @@ public class HomeActivity extends AppCompatActivity
         recyclerView = findViewById(R.id.recview_home);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        List<Sensor> list = new ArrayList<Sensor>();
-        Sensor test = new Sensor();
-        test.setSensorDescription("ddd");
-        list.add(test);
-        myAdapter = new CardRecyAdapter(list);
-        recyclerView.setAdapter(myAdapter);
+
+        //querry sensor information
+        BmobQuery<Sensor> query = new BmobQuery<Sensor>();
+        query.addWhereEqualTo("owner", currentUser);
+        query.findObjects(new FindListener<Sensor>() {
+            @Override
+            public void done(List<Sensor> list, BmobException e) {
+                if (e == null) {
+                    //bind data to adapter
+                    myAdapter = new CardRecyAdapter(list);
+                    recyclerView.setAdapter(myAdapter);
+                }
+            }
+        });
+
+        //refresh
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recyclerView.
+            }
+        });
 
 
         //悬浮按钮
@@ -136,4 +156,5 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
