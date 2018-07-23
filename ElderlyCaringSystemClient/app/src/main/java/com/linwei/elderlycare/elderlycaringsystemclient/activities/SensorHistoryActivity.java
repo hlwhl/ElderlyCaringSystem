@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
@@ -14,7 +15,9 @@ import com.linwei.elderlycare.elderlycaringsystemclient.adapters.HistoryDataAdap
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.Sensor;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.SensorDataHistory;
 
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
@@ -45,7 +48,10 @@ public class SensorHistoryActivity extends AppCompatActivity {
             public void done(List<SensorDataHistory> list, BmobException e) {
                 if (e == null) {
                     adapter = new HistoryDataAdapter(getApplicationContext(), list);
-                    recy_his.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    linearLayoutManager.setStackFromEnd(true);
+                    linearLayoutManager.setReverseLayout(true);
+                    recy_his.setLayoutManager(linearLayoutManager);
                     recy_his.setItemAnimator(new DefaultItemAnimator());
                     recy_his.setAdapter(adapter);
                 } else {
@@ -75,4 +81,6 @@ public class SensorHistoryActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

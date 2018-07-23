@@ -17,9 +17,7 @@ import com.linwei.elderlycare.elderlycaringsystemclient.R;
 import butterknife.BindView;
 
 public class WarningActivity extends AppCompatActivity implements View.OnClickListener{
-    @BindView(R.id.call_ward)
     Button callWard;
-    @BindView(R.id.call_emergency)
     Button callEmergency;
     String wardNum;
     String emgNum;
@@ -29,6 +27,8 @@ public class WarningActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warning);
         getSupportActionBar().setTitle("Warning");
+        callWard = findViewById(R.id.call_ward);
+        callEmergency = findViewById(R.id.call_emergency);
 
         wardNum = "666666";
         emgNum = "112";
