@@ -1,13 +1,12 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
@@ -15,9 +14,7 @@ import com.linwei.elderlycare.elderlycaringsystemclient.adapters.HistoryDataAdap
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.Sensor;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.SensorDataHistory;
 
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;

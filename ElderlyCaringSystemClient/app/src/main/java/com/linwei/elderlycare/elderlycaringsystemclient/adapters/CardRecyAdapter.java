@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
-import com.linwei.elderlycare.elderlycaringsystemclient.activities.HomeActivity;
 import com.linwei.elderlycare.elderlycaringsystemclient.activities.SensorHistoryActivity;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.Sensor;
-import com.linwei.elderlycare.elderlycaringsystemclient.entities.SensorDataHistory;
 
 import java.util.List;
 

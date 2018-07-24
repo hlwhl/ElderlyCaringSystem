@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.SensorDataHistory;
@@ -16,7 +15,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 public class HistoryDataAdapter extends RecyclerView.Adapter<HistoryDataAdapter.ViewHolder> {
@@ -24,11 +22,9 @@ public class HistoryDataAdapter extends RecyclerView.Adapter<HistoryDataAdapter.
     private static final int TYPE_TOP = 0x0000;
     private static final int TYPE_NORMAL = 0x0001;
     private LayoutInflater inflater;
-    private Context context;
 
     public HistoryDataAdapter(Context context, List<SensorDataHistory> hislist) {
         this.hislist = hislist;
-        this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
@@ -87,19 +83,6 @@ public class HistoryDataAdapter extends RecyclerView.Adapter<HistoryDataAdapter.
             time.setText(transformTime(his.getCreatedAt()));
             content.setText(his.getContent());
         }
-    }
-
-    public static long changeZoneTime() {
-        Date date = new Date("dddd");
-        Date dateTmp = null;
-        //旧的就是当前的时区，新的就是目标的时区
-        TimeZone oldZone = TimeZone.getDefault();
-        TimeZone newZone = TimeZone.getTimeZone("GMT");
-        if (date != null) {
-            int timeOffset = oldZone.getRawOffset() - newZone.getRawOffset();
-            dateTmp = new Date(date.getTime() - timeOffset);
-        }
-        return dateTmp.getTime();
     }
 
     public String transformTime(String time) {
