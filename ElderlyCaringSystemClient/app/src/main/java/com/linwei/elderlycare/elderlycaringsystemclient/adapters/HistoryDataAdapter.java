@@ -34,6 +34,7 @@ public class HistoryDataAdapter extends RecyclerView.Adapter<HistoryDataAdapter.
         return new ViewHolder(inflater.inflate(R.layout.item_his, parent, false));
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ViewHolder itemHolder = holder;
