@@ -1,6 +1,7 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ public class testActivity extends Activity {
         LinearLayout linearLayout = new LinearLayout(this);
         ListView listView = new ListView(this);
         //TestArrayAdapter adapter=new TestArrayAdapter(this);
+        Intent intent = new Intent();
     }
 
     @Override
