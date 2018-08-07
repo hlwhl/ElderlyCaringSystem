@@ -24,6 +24,15 @@ public class CardRecyAdapter extends RecyclerView.Adapter<CardRecyAdapter.ViewHo
         CardRecyAdapter.context = context;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        //TODO:根据传感器类型加载不同card layout
+        if (sensors.get(position).getTitle().equals("Temperature")) {
+
+        }
+        return super.getItemViewType(position);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
