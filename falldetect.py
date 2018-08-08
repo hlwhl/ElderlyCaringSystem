@@ -2,7 +2,6 @@ import bluepy
 from bluepy import sensortag
 import math
 import time
-import MySQLdb
 import math
 import os
 
@@ -15,24 +14,30 @@ def main():
 	#Connect to Sensortag
 	tag=sensortag.SensorTag(sensortagAddress);
 	print("Connected!")
-	#Connect to db
-	db=MySQLdb.Connect(host='systemdb.c6fod1umq6rt.eu-west-2.rds.amazonaws.com',port=3306,user='hlwhl',passwd='sxlfszhlw216',db='systemDB',charset='utf8')
-	db.autocommit(1)
-	cursor=db.cursor()
+
 	#Enableing Sensors
 	tag.accelerometer.enable()
+	tag.IRtemperature.enable()
 
 	time.sleep(1.0)
 
 	while True:
 		accData=tag.accelerometer.read()
 		print("Accelerometer: ",accData)
+		tempData=tag.IRtemperature.read()
+		print("Temp: ",tempData)
+		
 		x=accData[0];
 		y=accData[1];
 		z=accData[2];
-		cursor.execute("UPDATE AccData SET x="+str(x)+" WHERE id=1")
-		cursor.execute("UPDATE AccData SET y="+str(y)+" WHERE id=1")
-		cursor.execute("UPDATE AccData SET z="+str(z)+" WHERE id=1")	
+
+		#write temp data
+		os.system('curl -X POST \
+				-H \"X-Bmob-Application-Id: 718cb7645ebfcd11e7af7fc89230d1ce\"    \
+				-H \"X-Bmob-REST-API-Key: 7c42e568f537207d6beb3e38a0c4c5dc\"    \
+				-H \"Content-Type: application/json\" \
+				-d \'{\"type\": \"temp sensor\",\"content\":'+temp+',\"sensor\":{\"__type\":\"Pointer\",\"className\":\"Sensor\",\"objectId\":\"Yxw1888C\" } }\' \
+				https://api.bmob.cn/1/classes/SensorDataHistory')
 
 		if math.sqrt(x*x+y*y+z*z)>2 :
 			print("FALL!!!")
@@ -50,7 +55,6 @@ def main():
 				-H \"Content-Type: application/json\" \
 				-d \'{\"type\": \"motion sensor\",\"content\":\"fallen over\",\"sensor\":{\"__type\":\"Pointer\",\"className\":\"Sensor\",\"objectId\":\"a6a263407f\" } }\' \
 				https://api.bmob.cn/1/classes/SensorDataHistory')
-			cursor.execute('INSERT INTO Status (type) VALUES (\'FALL\')')
 		time.sleep(1.0)
 
 	db.close()
