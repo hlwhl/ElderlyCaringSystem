@@ -3,31 +3,27 @@ package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
 import com.linwei.elderlycare.elderlycaringsystemclient.adapters.CardRecyAdapter;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.Sensor;
-import com.linwei.elderlycare.elderlycaringsystemclient.entities.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -86,8 +82,8 @@ public class HomeActivity extends AppCompatActivity
                         swipeRefreshLayout.setRefreshing(false);
                         if (e == null) {
                             //bind data to adapter
-                            CardRecyAdapter newAdapter = new CardRecyAdapter(getApplicationContext(), list);
-                            recyclerView.swapAdapter(newAdapter, true);
+                            myAdapter = new CardRecyAdapter(getApplicationContext(), list);
+                            recyclerView.swapAdapter(myAdapter, true);
                             Toast.makeText(getApplicationContext(), "Refresh Succeed", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();

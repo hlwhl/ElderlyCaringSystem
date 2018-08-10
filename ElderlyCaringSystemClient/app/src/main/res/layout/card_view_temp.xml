@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:layout_height="wrap_content"
+<android.support.v7.widget.CardView android:id="@+id/cardview_temp"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     card_view:cardCornerRadius="12dp"
@@ -24,31 +25,26 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="#FFFFFF"
-            android:text="Motion Sensor"
+            android:text="Temperature"
             android:layout_marginBottom="10dp" />
+
         <TextView
-            android:id="@+id/card_btAddress"
+            android:id="@+id/tv_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="20℃"
             android:textColor="#FFFFFF"
-            android:text="Sensor Address: 00:00:00:00:00" />
+            android:textSize="32sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="15dp" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/card_sensorstatus"
-            android:text="Sensor Status: Powered On and Normal"
-            android:textColor="#FFFFFF" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/card_description"
-            android:text="Description...."
-            android:textColor="#FFFFFF" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:text="Click the card for history data." />
+            android:id="@+id/tv_hint_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The Temperature is perfect for living."
+            android:layout_gravity="center" />
 
 
     </LinearLayout>
