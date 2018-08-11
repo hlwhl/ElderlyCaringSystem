@@ -151,11 +151,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void validSensorCheck(BmobUser currentUser) {
-//        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
-//                R.style.Theme_AppCompat_DayNight_Dialog);
-//        progressDialog.setIndeterminate(true);
-//        progressDialog.setMessage("Checking User States...");
-//        progressDialog.show();
 
         //查询当前用户是否配置传感器
         BmobQuery<Sensor> query = new BmobQuery<Sensor>();

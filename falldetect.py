@@ -36,7 +36,7 @@ def main():
 				-H \"X-Bmob-Application-Id: 718cb7645ebfcd11e7af7fc89230d1ce\"    \
 				-H \"X-Bmob-REST-API-Key: 7c42e568f537207d6beb3e38a0c4c5dc\"    \
 				-H \"Content-Type: application/json\" \
-				-d \'{\"type\": \"temp sensor\",\"content\":'+temp+',\"sensor\":{\"__type\":\"Pointer\",\"className\":\"Sensor\",\"objectId\":\"Yxw1888C\" } }\' \
+				-d \'{\"type\": \"temp\",\"content\":'+temp+'℃,\"sensor\":{\"__type\":\"Pointer\",\"className\":\"Sensor\",\"objectId\":\"Yxw1888C\" } }\' \
 				https://api.bmob.cn/1/classes/SensorDataHistory')
 
 		if math.sqrt(x*x+y*y+z*z)>2 :

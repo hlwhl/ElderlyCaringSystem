@@ -33,7 +33,7 @@ public class CardRecyAdapter extends RecyclerView.Adapter<CardRecyAdapter.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        //TODO:根据传感器类型加载不同card layout
+        //根据传感器类型加载不同card layout
         if (sensors.get(position).getTitle().equals("Temperature")) {
             return 1;
         }
@@ -68,7 +68,7 @@ public class CardRecyAdapter extends RecyclerView.Adapter<CardRecyAdapter.ViewHo
             query.findObjects(new FindListener<SensorDataHistory>() {
                 @Override
                 public void done(List<SensorDataHistory> list, BmobException e) {
-                    holder.temp.setText(list.get(0).getContent() + "℃");
+                    holder.temp.setText(list.get(0).getContent());
                     if (Integer.parseInt(list.get(0).getContent()) > 24) {
                         holder.tempHint.setText("The temperature is a little hot.");
                         holder.cardView.setCardBackgroundColor(Color.RED);
@@ -136,6 +136,14 @@ public class CardRecyAdapter extends RecyclerView.Adapter<CardRecyAdapter.ViewHo
                 cardView = v.findViewById(R.id.cardview_temp);
                 temp = v.findViewById(R.id.tv_temp);
                 tempHint = v.findViewById(R.id.tv_hint_temp);
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent=new Intent(context,SensorHistoryActivity.class);
+                        intent.putExtra("sensor", sensors.get(getAdapterPosition()));
+                        context.startActivity(intent);
+                    }
+                });
             }
         }
     }

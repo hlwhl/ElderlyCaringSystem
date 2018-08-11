@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.linwei.elderlycare.elderlycaringsystemclient">
 
-    <!-- TODO 集成：1.1、添加数据SDK和推送SDK需要的权限 -->
+    <!-- 集成：1.1、添加数据SDK和推送SDK需要的权限 -->
     <!-- 比目数据SDK所需的权限 -->
     <!-- 允许联网 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
 
-        <!-- TODO 集成：1.2、添加推送所需要的服务和广播 -->
+        <!-- 集成：1.2、添加推送所需要的服务和广播 -->
         <service
             android:name="cn.bmob.push.lib.service.PushService"
             android:exported="true"
@@ -57,7 +57,6 @@
 
         <receiver android:name="cn.bmob.push.PushReceiver">
             <intent-filter>
-
                 <!-- 系统启动完成后会调用 -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <!-- 解锁完成后会调用 -->
