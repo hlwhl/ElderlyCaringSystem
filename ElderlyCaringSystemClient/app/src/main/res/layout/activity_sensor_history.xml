@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_weight="1"
+    android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_his"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="0.5">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/his_list"
@@ -14,5 +17,13 @@
             android:layout_height="wrap_content"
             android:overScrollMode="never" />
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/linechart_temp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:visibility="gone" />
+
 
 </LinearLayout>
