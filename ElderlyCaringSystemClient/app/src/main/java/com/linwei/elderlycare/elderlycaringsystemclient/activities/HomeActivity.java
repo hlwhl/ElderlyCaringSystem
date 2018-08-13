@@ -16,11 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
 import com.linwei.elderlycare.elderlycaringsystemclient.adapters.CardRecyAdapter;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.Sensor;
+import com.linwei.elderlycare.elderlycaringsystemclient.entities.User;
 
 import java.util.List;
 
@@ -32,7 +34,7 @@ import cn.bmob.v3.listener.FindListener;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    BmobUser currentUser;
+    User currentUser;
     private RecyclerView recyclerView;
     private CardRecyAdapter myAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -46,7 +48,12 @@ public class HomeActivity extends AppCompatActivity
         getSupportActionBar().setTitle("Dashboard");
         swipeRefreshLayout = findViewById(R.id.refresh_home);
 
-        currentUser = BmobUser.getCurrentUser();
+        currentUser = BmobUser.getCurrentUser(User.class);
+
+        if (currentUser.getBindUser() != null) {
+            TextView tvbindUser = findViewById(R.id.tvBindUserName);
+            tvbindUser.setText(currentUser.getBindUser().getUsername());
+        }
 
         //recycler view
         recyclerView = findViewById(R.id.recview_home);

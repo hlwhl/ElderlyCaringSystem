@@ -7,6 +7,15 @@ public class User extends BmobUser {
     private int type;
     private String address;
     private String phonenum;
+    private User bindUser;
+
+    public void setBindUser(User bindUser) {
+        this.bindUser = bindUser;
+    }
+
+    public User getBindUser() {
+        return bindUser;
+    }
 
     public void setPhonenum(String phonenum) {
         this.phonenum = phonenum;
@@ -31,4 +40,5 @@ public class User extends BmobUser {
     public int getType() {
         return type;
     }
+
 }

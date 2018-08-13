@@ -57,6 +57,7 @@
 
         <receiver android:name="cn.bmob.push.PushReceiver">
             <intent-filter>
+
                 <!-- 系统启动完成后会调用 -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <!-- 解锁完成后会调用 -->
@@ -98,7 +99,8 @@
             android:name=".activities.SignupActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".activities.AddSensorActivity" />
-        <activity android:name=".activities.SensorHistoryActivity"></activity>
+        <activity android:name=".activities.SensorHistoryActivity" />
+        <activity android:name=".activities.HomeActivity_Ward"></activity>
     </application>
 
 </manifest>

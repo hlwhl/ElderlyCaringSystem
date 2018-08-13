@@ -34,6 +34,14 @@
     <!--android:title="Send" />-->
     <!--</menu>-->
     <!--</item>-->
+    <item
+        android:id="@+id/menu_setBindUser"
+        android:title="Bind User Configure(Guardian/Ward)" />
+
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Logout" />
+
 
     <item
         android:id="@+id/menu_about"

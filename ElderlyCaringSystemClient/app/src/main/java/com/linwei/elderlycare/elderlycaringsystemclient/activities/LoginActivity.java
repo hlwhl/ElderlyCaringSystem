@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.Sensor;
+import com.linwei.elderlycare.elderlycaringsystemclient.entities.User;
 
 import java.util.List;
 
@@ -117,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
         //登录成功 查询用户是否有可用传感器
-        validSensorCheck(BmobUser.getCurrentUser());
+        validSensorUserTypeCheck(User.getCurrentUser(User.class));
         finish();
     }
 
@@ -150,8 +151,8 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    public void validSensorCheck(BmobUser currentUser) {
-
+    public void validSensorUserTypeCheck(User currentUser) {
+        final int type = currentUser.getType();
         //查询当前用户是否配置传感器
         BmobQuery<Sensor> query = new BmobQuery<Sensor>();
         query.addWhereEqualTo("owner", currentUser);
@@ -166,9 +167,14 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 }
                 if (e == null) {
-                        //有对应的传感器  跳转主页
+                    //有对应的传感器  跳转主页 type 0为监护人 type1为被监护人
+                    if (type == 0) {
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity_Ward.class);
+                        startActivity(intent);
+                    }
                     finish();
                 } else {
                     //查询出错
