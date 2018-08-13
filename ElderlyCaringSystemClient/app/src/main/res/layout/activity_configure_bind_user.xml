@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ConfigureBindUserActivity">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="248dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:text="Current Bind User:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvBindUserNameConfigure"
+        android:layout_width="67dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Not Set"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/tvBindUserNameConfigureDescribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="24dp"
+        android:text="Warning! You can configure the user that bind with your account. The bind account can access all your data in the system."
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBindUserNameConfigure" />
+
+    <Button
+        android:id="@+id/btn_bind"
+        android:layout_width="179dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="46dp"
+        android:text="Bind with a new user"
+        android:textColor="#ff0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBindUserNameConfigureDescribe" />
+
+    <Button
+        android:id="@+id/btn_unbind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="95dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="35dp"
+        android:text="Unbind from current user"
+        android:textColor="#ff0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_bind" />
+
+</android.support.constraint.ConstraintLayout>

@@ -3,11 +3,11 @@ package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
@@ -16,6 +16,7 @@ import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobInstallationManager;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.InstallationListener;
 import cn.bmob.v3.exception.BmobException;
 
@@ -53,8 +54,19 @@ public class SplashActivity extends AppCompatActivity {
         new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message message) {
-                Intent intent=new Intent(SplashActivity.this,LoginActivity.class);
-                startActivity(intent);
+
+                //判断用户是否已经登陆
+                BmobUser bmobUser = BmobUser.getCurrentUser();
+                if (bmobUser != null) {
+                    // 允许用户使用应用
+                    Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                } else {
+                    //缓存用户对象为空时， 可打开用户注册界面…
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+
                 finish();
                 return false;
             }

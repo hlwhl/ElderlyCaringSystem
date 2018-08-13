@@ -160,21 +160,20 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
         if (id == R.id.menu_about) {
             //跳转关于页面
+            Intent intent = new Intent(HomeActivity.this, AboutActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_setBindUser) {
+            //绑定用户设置
+            Intent intent = new Intent(HomeActivity.this, ConfigureBindUserActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_logout) {
+            //登出
+            BmobUser.logOut();
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

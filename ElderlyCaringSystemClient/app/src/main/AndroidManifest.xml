@@ -100,7 +100,11 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".activities.AddSensorActivity" />
         <activity android:name=".activities.SensorHistoryActivity" />
-        <activity android:name=".activities.HomeActivity_Ward"></activity>
+        <activity android:name=".activities.HomeActivity_Ward" />
+        <activity
+            android:name=".activities.ConfigureBindUserActivity"
+            android:theme="@style/Theme.AppCompat" />
+        <activity android:name=".activities.AboutActivity"></activity>
     </application>
 
 </manifest>

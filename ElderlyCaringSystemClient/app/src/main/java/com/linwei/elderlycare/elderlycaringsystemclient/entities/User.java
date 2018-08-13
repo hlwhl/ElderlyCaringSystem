@@ -9,6 +9,15 @@ public class User extends BmobUser {
     private String phonenum;
     private User bindUser;
 
+
+    public User() {
+        super();
+    }
+
+    public User(String id) {
+        this.setObjectId(id);
+    }
+
     public void setBindUser(User bindUser) {
         this.bindUser = bindUser;
     }
