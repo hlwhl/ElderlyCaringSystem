@@ -28,14 +28,18 @@
             android:id="@+id/tvBindUserName" />
 
         <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_callbinduser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="Call" />
 
         <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_sendmessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="action" />
+            android:visibility="gone"
+            android:text="Send Message" />
 
     </LinearLayout>
 

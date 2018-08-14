@@ -1,6 +1,8 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -41,7 +43,7 @@ public class HomeActivity extends AppCompatActivity
     private CardRecyAdapter myAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvBindUser, tvCUser;
-    private Button callBind;
+    private Button callBindUser, sendmessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class HomeActivity extends AppCompatActivity
         swipeRefreshLayout = findViewById(R.id.refresh_home);
 
         currentUser = BmobUser.getCurrentUser(User.class);
+
 
 
         //Load Bind User info
@@ -132,12 +135,40 @@ public class HomeActivity extends AppCompatActivity
     //加载绑定的用户信息
     public void setBindUserInfo() {
         if (!currentUser.getBindUser().getObjectId().equals("")) {
+            callBindUser = findViewById(R.id.btn_callbinduser);
+            sendmessage = findViewById(R.id.btn_sendmessage);
             tvBindUser = findViewById(R.id.tvBindUserName);
+            sendmessage.setVisibility(View.VISIBLE);
+            callBindUser.setVisibility(View.VISIBLE);
             BmobQuery<User> q = new BmobQuery<User>();
             q.getObject(currentUser.getBindUser().getObjectId(), new QueryListener<User>() {
                 @Override
-                public void done(User user, BmobException e) {
+                public void done(final User user, BmobException e) {
                     tvBindUser.setText(user.getUsername());
+                    callBindUser.setOnClickListener(new View.OnClickListener() {
+                        @SuppressLint("MissingPermission")
+                        @Override
+                        public void onClick(View view) {
+                            if (!user.getPhonenum().equals("")) {
+                                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + user.getPhonenum()));
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "User did not set phone number", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+                    sendmessage.setOnClickListener(new View.OnClickListener() {
+                        @SuppressLint("MissingPermission")
+                        @Override
+                        public void onClick(View view) {
+                            if (!user.getPhonenum().equals("")) {
+                                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + user.getPhonenum()));
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "User did not set phone number", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
                 }
             });
         }
