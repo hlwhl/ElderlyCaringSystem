@@ -18,6 +18,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class ConfigureBindUserActivity extends AppCompatActivity {
@@ -31,8 +32,16 @@ public class ConfigureBindUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_configure_bind_user);
         bindUser = findViewById(R.id.tvBindUserNameConfigure);
         final User currentUser = BmobUser.getCurrentUser(User.class);
-        if (currentUser.getBindUser() != null) {
-            bindUser.setText(currentUser.getBindUser().getUsername());
+        if (currentUser.getBindUser().getBindUser() != null) {
+            if (currentUser.getBindUser().getObjectId() != "") {
+                BmobQuery<User> q = new BmobQuery<User>();
+                q.getObject(currentUser.getBindUser().getObjectId(), new QueryListener<User>() {
+                    @Override
+                    public void done(User user, BmobException e) {
+                        bindUser.setText(user.getUsername());
+                    }
+                });
+            }
         }
 
 
@@ -73,6 +82,7 @@ public class ConfigureBindUserActivity extends AppCompatActivity {
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Toast.makeText(getApplicationContext(), "Update succeed", Toast.LENGTH_LONG).show();
+                                                    setBindUserName(editText.getText().toString());
                                                     dialog.dismiss();
                                                 } else {
                                                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -98,13 +108,13 @@ public class ConfigureBindUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //解绑按钮
-
-                currentUser.setBindUser(null);
+                currentUser.setBindUser(new User(""));
                 currentUser.update(currentUser.getObjectId(), new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
                         if (e == null) {
                             Toast.makeText(getApplicationContext(), "Update succeed", Toast.LENGTH_LONG).show();
+                            bindUser.setText("Not Set");
                             dialog.dismiss();
                         } else {
                             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -115,5 +125,9 @@ public class ConfigureBindUserActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void setBindUserName(String name) {
+        bindUser.setText(name);
     }
 }

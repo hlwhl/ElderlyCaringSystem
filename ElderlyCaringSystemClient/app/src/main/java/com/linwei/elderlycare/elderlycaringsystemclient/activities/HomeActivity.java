@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +40,8 @@ public class HomeActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private CardRecyAdapter myAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView tvBindUser, tvCUser;
+    private Button callBind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +50,15 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Dashboard");
+
         swipeRefreshLayout = findViewById(R.id.refresh_home);
 
         currentUser = BmobUser.getCurrentUser(User.class);
 
+
+        //Load Bind User info
         if (currentUser.getBindUser() != null) {
-            TextView tvbindUser = findViewById(R.id.tvBindUserName);
-            tvbindUser.setText(currentUser.getBindUser().getUsername());
+            setBindUserInfo();
         }
 
         //recycler view
@@ -122,6 +128,26 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+
+    //加载绑定的用户信息
+    public void setBindUserInfo() {
+        if (!currentUser.getBindUser().getObjectId().equals("")) {
+            tvBindUser = findViewById(R.id.tvBindUserName);
+            BmobQuery<User> q = new BmobQuery<User>();
+            q.getObject(currentUser.getBindUser().getObjectId(), new QueryListener<User>() {
+                @Override
+                public void done(User user, BmobException e) {
+                    tvBindUser.setText(user.getUsername());
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -132,10 +158,13 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+        //getMenuInflater().inflate(R.menu.home, menu);
+        tvCUser = findViewById(R.id.tv_cuser);
+        tvCUser.setText("Logged User: " + currentUser.getUsername());
         return true;
     }
 
