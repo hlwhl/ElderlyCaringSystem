@@ -1,14 +1,18 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
 
@@ -57,20 +61,48 @@ public class SplashActivity extends AppCompatActivity {
         new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message message) {
-
                 //判断用户是否已经登陆
                 BmobUser bmobUser = BmobUser.getCurrentUser();
                 if (bmobUser != null) {
-                    // 允许用户使用应用
-                    Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-                    startActivity(intent);
+
+                    if (android.os.Build.VERSION.SDK_INT >= 28) {
+                        //API28 create biometricPrompt
+                        BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(getApplicationContext())
+                                .setDescription("Need Verification before entered in")
+                                .setTitle("Biometric Verify")
+                                .setSubtitle("Subtitle")
+                                .setNegativeButton("Cancel", getMainExecutor(), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .build();
+                        CancellationSignal cancellationSignal = new CancellationSignal();
+                        biometricPrompt.authenticate(cancellationSignal, getMainExecutor(), new BiometricPrompt.AuthenticationCallback() {
+                            @Override
+                            public void onAuthenticationError(int errorCode, CharSequence errString) {
+                                super.onAuthenticationError(errorCode, errString);
+                            }
+
+                            @Override
+                            public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
+                                super.onAuthenticationSucceeded(result);
+                                // 允许用户使用应用
+                                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+
+                    }
+
+
                 } else {
                     //缓存用户对象为空时， 可打开用户注册界面…
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
-
-                finish();
                 return false;
             }
         }).sendEmptyMessageDelayed(0,2000);
