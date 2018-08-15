@@ -39,6 +39,10 @@
         android:title="Bind User Configure(Guardian/Ward)" />
 
     <item
+        android:id="@+id/menu_settings"
+        android:title="Settings" />
+
+    <item
         android:id="@+id/menu_logout"
         android:title="Logout" />
 
@@ -46,5 +50,6 @@
     <item
         android:id="@+id/menu_about"
         android:title="About" />
+
 
 </menu>

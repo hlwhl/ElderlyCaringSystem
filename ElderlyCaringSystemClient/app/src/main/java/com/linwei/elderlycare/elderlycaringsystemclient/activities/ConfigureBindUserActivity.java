@@ -31,6 +31,9 @@ public class ConfigureBindUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configure_bind_user);
         bindUser = findViewById(R.id.tvBindUserNameConfigure);
+
+        getSupportActionBar().setTitle("Configure Bind User");
+
         final User currentUser = BmobUser.getCurrentUser(User.class);
         if (currentUser.getBindUser().getBindUser() != null) {
             if (currentUser.getBindUser().getObjectId() != "") {
