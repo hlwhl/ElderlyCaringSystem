@@ -20,10 +20,12 @@ public class MyPushMessageReceiver extends BroadcastReceiver {
             //Log.d("bmob", "客户端收到推送内容："+intent.getStringExtra("msg"));
 
             Intent pendingIntent=new Intent(context, WarningActivity.class);
+            pendingIntent.putExtra("msg", intent.getStringExtra("msg"));
+
             pendingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(pendingIntent);
-            Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
-            BmobNotificationManager.getInstance(context).showNotification(largeIcon,"666",intent.getStringExtra("msg"),"666",pendingIntent);
+            Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon);
+            BmobNotificationManager.getInstance(context).showNotification(largeIcon,"Warning!",intent.getStringExtra("msg"),"666",pendingIntent);
         }
     }
 }

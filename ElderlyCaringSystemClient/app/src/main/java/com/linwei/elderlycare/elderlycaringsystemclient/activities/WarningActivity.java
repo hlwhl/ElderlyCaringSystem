@@ -1,36 +1,45 @@
 package com.linwei.elderlycare.elderlycaringsystemclient.activities;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.CountDownTimer;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
 
-import butterknife.BindView;
+import cn.bmob.v3.BmobUser;
 
 public class WarningActivity extends AppCompatActivity implements View.OnClickListener{
     Button callWard;
     Button callEmergency;
     String wardNum;
     String emgNum;
+    TextView title,description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warning);
         getSupportActionBar().setTitle("Warning");
+
+        title=findViewById(R.id.tv_emgTitle);
+        description=findViewById(R.id.tv_description);
+
+        Intent intent=getIntent();
+        String msg=intent.getStringExtra("msg");
+        if(msg.contains("Panic")){
+            title.setText("Panic Button Pressed!");
+            description.setText("The panic button has been pressed! The ward may in emergency situation!");
+        }
+
         callWard = findViewById(R.id.call_ward);
         callEmergency = findViewById(R.id.call_emergency);
 
-        wardNum = "666666";
+        wardNum = BmobUser.getCurrentUser().getMobilePhoneNumber();
         emgNum = "112";
 
         callWard.setOnClickListener(this);

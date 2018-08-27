@@ -15,15 +15,15 @@
         android:layout_marginEnd="107dp"
         android:layout_marginStart="107dp"
         android:layout_marginTop="31dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/tv_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tv_emgTitle"
         app:srcCompat="@drawable/warning" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_emgTitle"
         android:layout_width="183dp"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_description"
         android:layout_width="383dp"
         android:layout_height="50dp"
         android:layout_marginBottom="16dp"
@@ -45,7 +45,7 @@
         android:layout_marginTop="34dp"
         android:text="The acclerate sensor detected abnormal data! The ward may fallen over！"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/call_ward"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -62,7 +62,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_description" />
 
     <Button
         android:id="@+id/call_emergency"
@@ -74,10 +74,10 @@
         android:layout_marginTop="60dp"
         android:text="Call Emergency Service"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/call_ward"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_description"
         app:layout_constraintVertical_bias="0.459" />
 
 
