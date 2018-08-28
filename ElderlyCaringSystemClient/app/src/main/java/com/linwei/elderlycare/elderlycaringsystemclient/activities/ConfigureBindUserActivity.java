@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.linwei.elderlycare.elderlycaringsystemclient.R;
 import com.linwei.elderlycare.elderlycaringsystemclient.entities.User;
+import com.r0adkll.slidr.Slidr;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class ConfigureBindUserActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Configure Bind User");
 
         final User currentUser = BmobUser.getCurrentUser(User.class);
-        if (currentUser.getBindUser().getBindUser() != null) {
+        if (currentUser.getBindUser() != null) {
             if (currentUser.getBindUser().getObjectId() != "") {
                 BmobQuery<User> q = new BmobQuery<User>();
                 q.getObject(currentUser.getBindUser().getObjectId(), new QueryListener<User>() {
@@ -46,6 +47,8 @@ public class ConfigureBindUserActivity extends AppCompatActivity {
                 });
             }
         }
+
+        Slidr.attach(this);
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
