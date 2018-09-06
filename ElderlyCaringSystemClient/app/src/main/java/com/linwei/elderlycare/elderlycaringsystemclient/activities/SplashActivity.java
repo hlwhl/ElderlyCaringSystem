@@ -63,10 +63,10 @@ public class SplashActivity extends AppCompatActivity {
         new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message message) {
-                //判断用户是否已经登陆
+                //Determine if the user has logged in
                 BmobUser bmobUser = BmobUser.getCurrentUser();
                 if (bmobUser != null) {
-                    //判断用户是否已开启指纹识别
+                    //Determine if the user has turned on fingerprint recognition
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     boolean isBioOn = sharedPref.getBoolean("bio", false);
                     if (isBioOn) {
@@ -86,7 +86,7 @@ public class SplashActivity extends AppCompatActivity {
         }).sendEmptyMessageDelayed(0,2000);
     }
 
-    //指纹验证
+    //fingerprint verification
     public void biometricVerify() {
         if (android.os.Build.VERSION.SDK_INT >= 28) {
             //API28 create biometricPrompt
@@ -117,7 +117,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                     super.onAuthenticationSucceeded(result);
-                    // 允许用户使用应用
+                    // verification passed, jump to the home activity
                     Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();

@@ -71,7 +71,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- 第3步中创建的消息接收器，在这里进行注册 -->
+        <!-- Register the message reveiver -->
         <receiver android:name=".utils.MyPushMessageReceiver">
             <intent-filter>
                 <action android:name="cn.bmob.push.action.MESSAGE" />
